@@ -214,9 +214,9 @@ namespace BVVDT34
             ammo_missile.Guidance = AmmoType.GuidanceType.Laser;
             ammo_missile.Flight = AmmoType.FlightPattern.Hump;
             ammo_missile.ClimbAngle = 18f;
-            ammo_missile.DiveAngle = 45f;
+            ammo_missile.DiveAngle = 90f;
             ammo_missile.CachedIndex = -1;
-            ammo_missile.LoiterEndDistance = 120f;
+            ammo_missile.LoiterEndDistance = 15f;
             ammo_missile.LoiterAltitude = 10f;
             ammo_missile.GuidanceLockoutTime = 60f;
             ammo_missile.GuidanceNoLockoutRange = 99999999999999f;
@@ -234,7 +234,7 @@ namespace BVVDT34
             ammo_missile.SpallMultiplier = 100f;
             ammo_missile.MaxSpallRha = 540f;
             ammo_missile.MinSpallRha = 240f;
-            ammo_missile.TurnSpeed = 3f;
+            ammo_missile.TurnSpeed = 90f;
             ammo_missile.ImpactEffectDescriptor = new ParticleEffectsManager.ImpactEffectDescriptor()
             {
                 HasImpactEffect = true,
