@@ -21,9 +21,13 @@ Replaces the standard 85mm gun with a fictional smoothbore, replaces the MG with
 
 Stalinium Armor 
  - Makes the armor really powerful, be mindful of gap in the mantlet with any APFSDS, and side armor when dealing with very powerful modded ammo.
-Seen Below
+ - Demonstrations Seen Below
 
 <img width="1512" height="924" alt="image" src="https://github.com/user-attachments/assets/533d4b2e-2fd6-41e4-b43e-4b561dfe7877" />
+
+
+<img width="1541" height="1080" alt="image" src="https://github.com/user-attachments/assets/aebb38f2-9755-4122-9581-65e862bd254f" />
+
 
 Super Engine
 
