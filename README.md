@@ -20,7 +20,9 @@ Replaces the standard 85mm gun with a fictional smoothbore, replaces the MG with
   Janky top attack atgm, try aiming for the lowest point of what you can see for maximum effect. May spin out of control in the air
 
 Stalinium Armor 
+ - Makes the armor really powerful, be mindful of gap in the mantlet with any APFSDS, and side armor when dealing with very powerful modded ammo.
 Seen Below
+
 <img width="1512" height="924" alt="image" src="https://github.com/user-attachments/assets/533d4b2e-2fd6-41e4-b43e-4b561dfe7877" />
 
 Super Engine
