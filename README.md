@@ -1,5 +1,4 @@
-Adds major upgrades to the T-34
-all configurable
+Adds major upgrades to the T-34 with config
 
 Smoothbore Cannon (Firepower upgrade)
 
