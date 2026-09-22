@@ -124,11 +124,6 @@ namespace BVVDT34
                 machine_gun.BaseDeviationAngle = 0.065f / 1.2f;
                 cannonrack._retrievalDelaySeconds = 1f;
                 cannonrack._storageDelaySeconds = 2f;
-                MelonLogger.Msg($"ap = {ap}");
-                MelonLogger.Msg($"heat = {heat}");
-                MelonLogger.Msg($"nuke = {nuke}");
-                MelonLogger.Msg($"atgm = {atgm}");
-                MelonLogger.Msg($"mg = {mg}");
                 MelonLogger.Msg("Readjusted Main Gun!");
                 main_gun.Feed.AmmoTypeInBreech = null;
                 machine_gun.Feed.AmmoTypeInBreech = null;
@@ -164,7 +159,7 @@ namespace BVVDT34
                 GameObject glacis = vic.GetComponent<LateFollowTarget>()._lateFollowers[0].transform.Find("T34_Hull_armour/front glacis").gameObject;
                 GameObject hullside = vic.GetComponent<LateFollowTarget>()._lateFollowers[0].transform.Find("T34_Hull_armour/45mm side plate").gameObject;
                 GameObject hatch = vic.GetComponent<LateFollowTarget>()._lateFollowers[0].transform.Find("T34_Hull_armour/driver's hatch").gameObject;
-                MelonLogger.Msg("Armors Found! Replacing...");
+                MelonLogger.Msg("Armors Found! Replacing..");
                 turret_cast.GetComponent<VariableArmor>()._armorType = Stalinium.stalinium_turret_codex;
                 glacis.GetComponent<VariableArmor>()._armorType = Stalinium.stalinium_hull_codex;
                 hatch.GetComponent<VariableArmor>()._armorType = Stalinium.stalinium_driver_codex;
@@ -237,10 +232,6 @@ namespace BVVDT34
         {
             foreach (Vehicle vic in BVVDT34Mod.vics)
             {
-                if (SharedAssets.ammo_3bm32 == null)
-                    MelonLogger.Msg("3bm32 is null!");
-                if (SharedAssets.ammo_kobra == null)
-                    MelonLogger.Msg("the kobra is null!");
                 HandleConversion(vic);
             }
 
