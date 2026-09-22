@@ -1,6 +1,6 @@
 Adds major upgrades to the T-34 with config
 
-Thanks to ATLAS, Ziron, and many others for helping me make this BS
+Thanks to ATLAS and Ziron for helping me making this bs
 
 Smoothbore Cannon (Firepower upgrade)
 
