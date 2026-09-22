@@ -30,7 +30,7 @@ Stalinium Armor
 
 Super Engine
 
-80kmh forward and reverse speed, boosted horsepower to boot
+- 80kmh forward and reverse speed, boosted horsepower to boot
 
 
 FCS Upgrade
