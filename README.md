@@ -16,7 +16,7 @@ Replaces the standard 85mm gun with a fictional smoothbore, replaces the MG with
    - its a nuke
 
 - 9M94ML Velikan
-    -Janky top attack atgm, try aiming for the lowest point of what you can see for maximum effect. May spin out of control in the air
+    - Janky top attack atgm, try aiming for the lowest point of what you can see for maximum effect. May spin out of control in the air
 
 Stalinium Armor 
  - Makes the armor really powerful, be mindful of gap in the mantlet with any APFSDS, and side armor when dealing with very powerful modded ammo.
