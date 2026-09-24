@@ -1,4 +1,4 @@
-﻿using BVVDT34;
+using BVVDT34;
 using GHPC;
 using GHPC.Camera;
 using GHPC.Effects;

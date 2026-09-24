@@ -1,4 +1,4 @@
-﻿using GHPC.Camera;
+using GHPC.Camera;
 using GHPC.Vehicle;
 using GHPC.Weaponry;
 using MelonLoader;
