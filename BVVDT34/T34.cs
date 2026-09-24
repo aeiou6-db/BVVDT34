@@ -138,11 +138,6 @@ namespace BVVDT34
                 machine_gun.BaseDeviationAngle = 0.065f / 1.2f;
                 cannonrack._retrievalDelaySeconds = 1f;
                 cannonrack._storageDelaySeconds = 2f;
-                MelonLogger.Msg($"ap = {ap}");
-                MelonLogger.Msg($"heat = {heat}");
-                MelonLogger.Msg($"nuke = {nuke}");
-                MelonLogger.Msg($"atgm = {atgm}");
-                MelonLogger.Msg($"mg = {mg}");
                 MelonLogger.Msg("Readjusted Main Gun!");
                 main_gun.Feed.AmmoTypeInBreech = null;
                 machine_gun.Feed.AmmoTypeInBreech = null;
