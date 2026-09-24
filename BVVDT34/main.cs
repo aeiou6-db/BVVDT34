@@ -16,7 +16,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-[assembly: MelonInfo(typeof(BVVDT34Mod), "BVVD T34", "1.0.0", "Aeiou6")]
+[assembly: MelonInfo(typeof(BVVDT34Mod), "BVVD T34", "1.1", "Aeiou6")]
 [assembly: MelonGame("Radian Simulations LLC", "GHPC")]
 
 namespace BVVDT34
