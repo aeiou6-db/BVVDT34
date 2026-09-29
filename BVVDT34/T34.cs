@@ -353,8 +353,8 @@ namespace BVVDT34
                     MelonLogger.Msg("3ubr6 is null!");
                 if (SharedAssets.ammo_kobra == null)
                     MelonLogger.Msg("the kobra is null!");
-                Vehicle T80 = AssetUtil.LoadVanillaVehicle("T80B");
-                soviet_crew_voice = T80.GetComponentInChildren<CrewVoiceHandler>().gameObject;
+                Vehicle T62 = AssetUtil.LoadVanillaVehicle("T62");
+                soviet_crew_voice = T62.GetComponentInChildren<CrewVoiceHandler>().gameObject;
                 HandleConversion(vic);
             }
 
