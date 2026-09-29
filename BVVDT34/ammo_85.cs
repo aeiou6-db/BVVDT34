@@ -5,6 +5,7 @@ using MelonLoader;
 using ModUtil;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 
 namespace BVVDT34
@@ -28,6 +29,7 @@ namespace BVVDT34
         public static AmmoCodexScriptable ammo_codex_mininuke;
         public static AmmoType ammo_mininuke;
         public static GameObject ammo_mininuke_vis = null;
+        public static AmmoType mininuke_forward_frag = new AmmoType();
 
         public static AmmoClipCodexScriptable clip_codex_missile;
         public static AmmoType.AmmoClip clip_missile;
@@ -56,27 +58,29 @@ namespace BVVDT34
             Util.ShallowCopy(ammo_ap, SharedAssets.ammo_3bm32);
             ammo_ap.Name = "BR999PM APHEFSDS-T";
             ammo_ap.Category = AmmoType.AmmoCategory.Explosive;
+            ammo_ap.ShortName = AmmoType.AmmoShortName.Sabot;
             ammo_ap.DetonateEffect = SharedAssets.ammo_3bk18m.DetonateEffect;
             ammo_ap.TerrainImpactEffect = SharedAssets.ammo_3bm32.TerrainImpactEffect;
             ammo_ap.Guidance = AmmoType.GuidanceType.Unguided;
             ammo_ap.ImpactAudio = GHPC.Audio.ImpactAudioType.MainGunHighExplosive;
             ammo_ap.AlwaysProduceBlast = true;
             ammo_ap.Caliber = 85;
-            ammo_ap.Coeff = 0f;
-            ammo_ap.TntEquivalentKg = 5f;
+            ammo_ap.Coeff = 0.25f;
+            ammo_ap.TntEquivalentKg = 1.75f;
             ammo_ap.CertainRicochetAngle = 0f;
             ammo_ap.ArmingDistance = 0f;
             ammo_ap.RhaToFuse = 25f;
-            ammo_ap.ImpactFuseTime = 0.002f;
+            ammo_ap.ImpactFuseTime = 0.0013f;
             ammo_ap.RhaPenetration = 3000f;
-            ammo_ap.Mass = 9.3f;
-            ammo_ap.MuzzleVelocity = 2000f;
+            ammo_ap.Mass = 23.3f;
+            ammo_ap.MuzzleVelocity = 2500f;
             ammo_ap.SpallMultiplier = 5f;
-            ammo_ap.DetonateSpallCount = 100;
+            ammo_ap.DetonateSpallCount = 60;
             ammo_ap.SphericalSpall = true;
+            ammo_ap.Normalize = true;
             ammo_ap.IgnoreSlat = true;
-            ammo_ap.MaxSpallRha = 100f;
-            ammo_ap.MinSpallRha = 10f;
+            ammo_ap.MaxSpallRha = 70f;
+            ammo_ap.MinSpallRha = 22f;
             ammo_ap.ImpactEffectDescriptor = new ParticleEffectsManager.ImpactEffectDescriptor()
             {
                 HasImpactEffect = true,
@@ -113,17 +117,18 @@ namespace BVVDT34
             Util.ShallowCopy(ammo_heat, SharedAssets.ammo_3bk18m);
             ammo_heat.Name = "UBP-988M SAPHEAT-FS";
             ammo_heat.Guidance = AmmoType.GuidanceType.Unguided;
+            ammo_heat.ShortName = AmmoType.AmmoShortName.Heat;
             ammo_heat.Caliber = 85;
-            ammo_heat.Coeff = 0f;
-            ammo_heat.TntEquivalentKg = 12f;
-            ammo_heat.RhaToFuse = 10f;
-            ammo_heat.ImpactFuseTime = 0.0008f;
-            ammo_heat.RhaPenetration = 1500f;
+            ammo_heat.Coeff = 0.65f;
+            ammo_heat.TntEquivalentKg = 4.23f;
+            ammo_heat.RhaToFuse = 25f;
+            ammo_heat.ImpactFuseTime = 0f;
+            ammo_heat.RhaPenetration = 5500f;
             ammo_heat.ImpactAudio = GHPC.Audio.ImpactAudioType.ArtilleryGun;
             ammo_heat.DetonateEffect = SharedAssets.ammo_3OF26.DetonateEffect;
             ammo_heat.TerrainImpactEffect = SharedAssets.ammo_3OF26.TerrainImpactEffect;
-            ammo_heat.Mass = 15.43f;
-            ammo_heat.MuzzleVelocity = 3000f;
+            ammo_heat.Mass = 47.5f;
+            ammo_heat.MuzzleVelocity = 1850f;
             ammo_heat.ArmingDistance = 0f;
             ammo_heat.Tandem = true;
             ammo_heat.IgnoreSlat = true;
@@ -165,24 +170,29 @@ namespace BVVDT34
 
             ammo_mininuke = new AmmoType();
             Util.ShallowCopy(ammo_mininuke, SharedAssets.ammo_3OF26);
-            ammo_mininuke.Name = "3BV85 MicroNuke";
+            ammo_mininuke.Name = "3BV85 Micronuke";
             ammo_mininuke.ShortName = AmmoType.AmmoShortName.He;
             ammo_mininuke.Guidance = AmmoType.GuidanceType.Unguided;
             ammo_mininuke.Caliber = 85;
-            ammo_mininuke.TntEquivalentKg = 350f;
-            ammo_mininuke.RhaPenetration = 60f;
-            ammo_mininuke.ImpactFuseTime = 0.0001f;
-            ammo_mininuke.RhaToFuse = 5f;
+            ammo_mininuke.TntEquivalentKg = 39.5f;
+            ammo_mininuke.CachedIndex = -1;
+            ammo_mininuke.RhaPenetration = 12f;
+            ammo_mininuke.ArmingDistance = 40;
+            ammo_mininuke.ImpactFuseTime = 1f;
+            ammo_mininuke.RhaToFuse = 12f;
+            ammo_mininuke.MicroFragScaling = 3f;
             ammo_mininuke.DetonateEffect = SharedAssets.ammo_3OF26.DetonateEffect;
             ammo_mininuke.TerrainImpactEffect = SharedAssets.ammo_3OF26.TerrainImpactEffect;
             ammo_mininuke.VisualModel = SharedAssets.ammo_3bk18m.VisualModel;
-            ammo_mininuke.Coeff = 0f;
-            ammo_mininuke.Mass = 4.85f;
-            ammo_mininuke.MuzzleVelocity = 3000f;
-            ammo_mininuke.SpallMultiplier = 100f;
-            ammo_mininuke.MaxSpallRha = 540f;
-            ammo_mininuke.MinSpallRha = 240f;
-            ammo_mininuke.DetonateSpallCount = 1000;
+            ammo_mininuke.Coeff = 1.5f;
+            ammo_mininuke.Mass = 133f;
+            ammo_mininuke.MuzzleVelocity = 550f;
+            ammo_mininuke.SpallMultiplier = 1f;
+            ammo_mininuke.MaxSpallRha = 30f;
+            ammo_mininuke.MinSpallRha = 10f;
+            ammo_mininuke.DetonateSpallCount = 135;
+            ammo_mininuke.NoisePowerX = 24;
+            ammo_mininuke.NoisePowerY = 26;
             ammo_mininuke.ImpactEffectDescriptor = new ParticleEffectsManager.ImpactEffectDescriptor()
             {
                 HasImpactEffect = true,
@@ -199,7 +209,7 @@ namespace BVVDT34
 
             clip_mininuke = new AmmoType.AmmoClip();
             clip_mininuke.Capacity = 1;
-            clip_mininuke.Name = "3BV85 MicroNuke";
+            clip_mininuke.Name = "3BV85 Micronuke";
             clip_mininuke.MinimalPattern = new AmmoCodexScriptable[1];
             clip_mininuke.MinimalPattern[0] = ammo_codex_mininuke;
 
@@ -212,28 +222,24 @@ namespace BVVDT34
             ammo_mininuke.VisualModel = ammo_mininuke_vis;
             ammo_mininuke.VisualModel.GetComponent<AmmoStoredVisual>().AmmoType = ammo_mininuke;
             ammo_mininuke.VisualModel.GetComponent<AmmoStoredVisual>().AmmoScriptable = ammo_codex_mininuke;
-
             /////////////////////////////////////////////////////////////////////////////////////////////
             ammo_missile = new AmmoType();
             Util.ShallowCopy(ammo_missile, SharedAssets.ammo_kobra);
             ammo_missile.Name = "9M94ML Velikan";
+            ammo_missile.Caliber = 85;
             ammo_missile.SpiralAngularRate = 10800f;
-            ammo_missile.SpiralPower = 120f;
-            ammo_missile.MuzzleVelocity = 150f;
-            ammo_missile.RhaPenetration = 999999999f;
-            ammo_missile.CachedIndex = -1;
-            ammo_missile.TntEquivalentKg = 50f;
+            ammo_missile.SpiralPower = 150f;
+            ammo_missile.MuzzleVelocity = 750f;
+            ammo_missile.RhaPenetration = 20000f;
+            ammo_missile.TntEquivalentKg = 10.5f;
+            ammo_missile.Mass = 43.5f;
             ammo_missile.Guidance = AmmoType.GuidanceType.Laser;
-            ammo_missile.Flight = AmmoType.FlightPattern.Hump;
-            ammo_missile.ClimbAngle = 18f;
+            ammo_missile.Flight = AmmoType.FlightPattern.Direct;
+            ammo_missile.Category = AmmoType.AmmoCategory.ShapedCharge;
             ammo_missile.Tandem = true;
             ammo_missile.IgnoreSlat = true;
-            ammo_missile.TurnSpeed = 8f;
+            ammo_missile.TurnSpeed = 12f;
             ammo_missile.GuidanceLockoutTime = 0f;
-            ammo_missile.GuidanceNoLoiterRange = 1200f;
-            ammo_missile.DiveAngle = 87f;
-            ammo_missile.LoiterAltitude = 60f;
-            ammo_missile.LoiterEndDistance = 250f;
             ammo_missile.Coeff = 0.5f;
             ammo_missile.AimPointMarch = -2f;
             ammo_missile.RangedFuseTime = 35f;
@@ -244,9 +250,10 @@ namespace BVVDT34
             ammo_missile.MinSpallRha = 20f;
             ammo_missile.MaxSpallRha = 100f;
             ammo_missile.DetonateSpallCount = 50;
-            ammo_missile.RhaToFuse = 10f;
-            ammo_missile.ImpactFuseTime = 0.005f;
-            ammo_missile.SphericalSpall = true;
+            ammo_missile.RhaToFuse = 12f;
+            ammo_missile.ImpactFuseTime = 0.05f;
+            ammo_missile.TerrainImpactEffect = SharedAssets.ammo_3OF26.TerrainImpactEffect;
+            ammo_missile.DetonateEffect = SharedAssets.ammo_3OF26.DetonateEffect;
             ammo_missile.ImpactEffectDescriptor = new ParticleEffectsManager.ImpactEffectDescriptor()
             {
                 HasImpactEffect = true,
@@ -283,13 +290,17 @@ namespace BVVDT34
             ammo_mg.Name = "20mm APFSDS-T";
             ammo_mg.ShortName = AmmoType.AmmoShortName.Coax;
             ammo_mg.UseTracer = true;
-            ammo_mg.Mass = 0.075f;
+            ammo_mg.Mass = 0.25f;
             ammo_mg.Caliber = 20f;
             ammo_mg.Coeff = 0.0f;
             ammo_mg.MinSpallRha = 10f;
             ammo_mg.MaxSpallRha = 100f;
             ammo_mg.MuzzleVelocity = 3200f;
-            ammo_mg.RhaPenetration = 75f;
+            ammo_mg.RhaPenetration = 89f;
+            ammo_mg.SpallMultiplier = 2f;
+            ammo_mg.MinSpallRha = 6;
+            ammo_mg.MaxSpallRha = 24;
+            ammo_mg.CertainRicochetAngle = 15.3f;
             ammo_mg.VisualType = SharedAssets.ammo_3bm22.VisualType;
             ammo_mg.ImpactAudio = GHPC.Audio.ImpactAudioType.AutocannonKinetic;
             ammo_mg.ImpactEffectDescriptor = new ParticleEffectsManager.ImpactEffectDescriptor()
@@ -306,7 +317,7 @@ namespace BVVDT34
             ammo_codex_mg.name = "ammo_mg";
 
             clip_mg = new AmmoType.AmmoClip();
-            clip_mg.Capacity = 250;
+            clip_mg.Capacity = 400;
             clip_mg.Name = "20mm APFSDS-T";
             clip_mg.MinimalPattern = new AmmoCodexScriptable[1];
             clip_mg.MinimalPattern[0] = ammo_codex_mg;
@@ -322,7 +333,6 @@ namespace BVVDT34
             ammo_mg.VisualModel.GetComponent<AmmoStoredVisual>().AmmoType = ammo_mg;
             ammo_mg.VisualModel.GetComponent<AmmoStoredVisual>().AmmoScriptable = ammo_codex_mg;
             /*****************************************************************************************************/
-
         }
     }
 }

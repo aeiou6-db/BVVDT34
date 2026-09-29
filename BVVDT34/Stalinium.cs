@@ -48,8 +48,8 @@ namespace BVVDT34
             staliniumhull.CanShatterLongRods = true;
             staliniumhull.NormalizesHits = true;
             staliniumhull.ThicknessSource = ArmorType.RhaSource.Multipliers;
-            staliniumhull.SpallAngleMultiplier = 1;
-            staliniumhull.SpallPowerMultiplier = 1f;
+            staliniumhull.SpallAngleMultiplier = 0;
+            staliniumhull.SpallPowerMultiplier = 0f;
             staliniumhull.RhaeMultiplierCe = 9999f;
             staliniumhull.RhaeMultiplierKe = 9999f;
             stalinium_hull_codex.ArmorType = staliniumhull;
@@ -60,8 +60,8 @@ namespace BVVDT34
             staliniumturret.CanShatterLongRods = true;
             staliniumturret.NormalizesHits = true;
             staliniumturret.ThicknessSource = ArmorType.RhaSource.Multipliers;
-            staliniumturret.SpallAngleMultiplier = 1;
-            staliniumturret.SpallPowerMultiplier = 1f;
+            staliniumturret.SpallAngleMultiplier = 0;
+            staliniumturret.SpallPowerMultiplier = 0f;
             staliniumturret.HarderIsBetter = true;
             staliniumturret.RhaeMultiplierCe = 999999f;
             staliniumturret.RhaeMultiplierKe = 999999f;
