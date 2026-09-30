@@ -54,7 +54,6 @@ namespace BVVDT34
 
         static GameObject soviet_crew_voice;
 
-
         public static void Config(MelonPreferences_Category cfg)
         {
             smoothbore_cannon = cfg.CreateEntry<bool>("Use Advanced Ammo for machine gun and cannon", true);
@@ -164,7 +163,7 @@ namespace BVVDT34
                 main_gun.Impulse = 2000;
                 machine_gun.Impulse = 35;
                 machine_gun.Feed._totalCycleTime = 0.0005f;
-                machine_gun.BaseDeviationAngle = 0.85f / 1.6f;
+                machine_gun.BaseDeviationAngle = 0.195f;
                 cannonrack._retrievalDelaySeconds = 1f;
                 cannonrack._storageDelaySeconds = 2f;
                 MelonLogger.Msg("Readjusted Main Gun!");
@@ -265,6 +264,7 @@ namespace BVVDT34
                 track.GetComponent<UniformArmor>().SecondarySabotRha = 9999f;
                 track.GetComponent<UniformArmor>().SecondaryHeatRha = 9999f;
                 track.GetComponent<UniformArmor>()._armorType = Stalinium.stalinium_hull_codex;
+                track.GetComponent<UniformArmor>()._name = "Stalinium Track";
                 //////////////////////////////////
                 MelonLogger.Msg("Success!");
 
@@ -353,8 +353,8 @@ namespace BVVDT34
                     MelonLogger.Msg("3ubr6 is null!");
                 if (SharedAssets.ammo_kobra == null)
                     MelonLogger.Msg("the kobra is null!");
-                Vehicle T80 = AssetUtil.LoadVanillaVehicle("T80B");
-                soviet_crew_voice = T80.GetComponentInChildren<CrewVoiceHandler>().gameObject;
+                Vehicle T62 = AssetUtil.LoadVanillaVehicle("T62");
+                soviet_crew_voice = T62.GetComponentInChildren<CrewVoiceHandler>().gameObject;
                 HandleConversion(vic);
             }
 

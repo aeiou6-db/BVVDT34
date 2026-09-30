@@ -1,8 +1,11 @@
 ﻿using GHPC.Effects;
+using GHPC.Effects.Voices;
+using GHPC.State;
 using GHPC.Weaponry;
 using GHPC.Weapons;
 using MelonLoader;
 using ModUtil;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
@@ -43,6 +46,11 @@ namespace BVVDT34
         public static AmmoType ammo_mg;
         public static GameObject ammo_mg_vis = null;
 
+        public static AmmoClipCodexScriptable clip_codex_mghe;
+        public static AmmoType.AmmoClip clip_mghe;
+        public static AmmoCodexScriptable ammo_codex_mghe;
+        public static AmmoType ammo_mghe;
+        public static GameObject ammo_mghe_vis = null;
 
         public override void UnloadDynamicAssets()
         {
@@ -51,6 +59,83 @@ namespace BVVDT34
             GameObject.DestroyImmediate(ammo_mininuke_vis);
             GameObject.DestroyImmediate(ammo_missile_vis);
             GameObject.DestroyImmediate(ammo_mg_vis);
+        }
+        public static void CreateCompositeOptimizations()
+        {
+            var mg_optimize = new List<AmmoType.ArmorOptimization>() { };
+
+            string[] composite_names = new string[] {
+                "Reinforced Mantlet Roof",
+                "Stalinium Hull",
+                "Reinforced Gun Mantlet",
+                "Stalinium-Alloyed Gun Barrel",
+                "Reinforced Gun Breach",
+                "Stalinium Track",
+                "Stalinium Driver's Hatch",
+                "Stalinium Front Plate",
+                "Stalinium-Reinforced Cast Turret",
+                "Vorschlaghammer heavy composite",
+                "Vorschlaghammer medium composite",
+                "Vorschlaghammer light composite",
+                "Eber heavy composite",
+                "Eber medium composite",
+                "Eber light composite",
+                "Abrams special armor gen 1 hull front",
+                "Abrams special armor gen 1 mantlet",
+                "Abrams special armor gen 1 turret cheeks",
+                "Abrams special armor gen 1 turret sides",
+                "Abrams special armor gen 0 turret cheeks",
+                "Corundum ball armor",
+                "Kvartz",
+        };
+
+            ArmorCodexScriptable[] armours = Resources.FindObjectsOfTypeAll<ArmorCodexScriptable>();
+
+            foreach (string name in composite_names)
+            {
+                IEnumerable<ArmorCodexScriptable> possible_armours = armours.Where(o => o.name == name);
+
+                if (possible_armours.Count() == 0) continue;
+
+                ArmorCodexScriptable armour = possible_armours.First();
+
+                AmmoType.ArmorOptimization optimization_mg = new AmmoType.ArmorOptimization();
+                optimization_mg.Armor = armour;
+                optimization_mg.RhaRatio = 0.45f;
+                mg_optimize.Add(optimization_mg);
+            }
+            ammo_mg.ArmorOptimizations = mg_optimize.ToArray<AmmoType.ArmorOptimization>();
+            ammo_mghe.ArmorOptimizations = ammo_mg.ArmorOptimizations;
+        }
+        public static IEnumerator SetupEraOptimizations(GameState _)
+        {
+            ArmorCodexScriptable[] armor_codices = Resources.FindObjectsOfTypeAll<ArmorCodexScriptable>();
+            ArmorCodexScriptable[] k1_k5_m1_codices = armor_codices.Where
+            (
+                o =>
+                o.name.Contains("Kontakt-1") ||
+                o.name.Contains("Kontakt-5") ||
+                o.name.Contains("M1 ERA")
+            ).ToArray();
+
+            ArmorCodexScriptable[] relikt_codices = armor_codices.Where(o => o.name.Contains("Relikt")).ToArray();
+
+            List<AmmoType.ArmorOptimization> optimizations = new List<AmmoType.ArmorOptimization>();
+
+            foreach (ArmorCodexScriptable codex in k1_k5_m1_codices)
+            {
+                optimizations.Add(Util.CreateArmourOptimization(codex, 0.002f));
+            }
+
+            foreach (ArmorCodexScriptable relikt_codex in relikt_codices)
+            {
+                optimizations.Add(Util.CreateArmourOptimization(relikt_codex, 0.08f));
+            }
+
+            ammo_missile.ArmorOptimizations = optimizations.ToArray();
+            ammo_heat.ArmorOptimizations = ammo_missile.ArmorOptimizations;
+
+            yield break;
         }
         public override void LoadDynamicAssets()
         {
@@ -178,7 +263,7 @@ namespace BVVDT34
             ammo_mininuke.CachedIndex = -1;
             ammo_mininuke.RhaPenetration = 12f;
             ammo_mininuke.ArmingDistance = 40;
-            ammo_mininuke.ImpactFuseTime = 1f;
+            ammo_mininuke.ImpactFuseTime = 0f;
             ammo_mininuke.RhaToFuse = 12f;
             ammo_mininuke.MicroFragScaling = 3f;
             ammo_mininuke.DetonateEffect = SharedAssets.ammo_3OF26.DetonateEffect;
@@ -283,24 +368,84 @@ namespace BVVDT34
             ammo_missile.VisualModel.GetComponent<AmmoStoredVisual>().AmmoType = ammo_missile;
             ammo_missile.VisualModel.GetComponent<AmmoStoredVisual>().AmmoScriptable = ammo_codex_missile;
 
+                        /////////////////////////////////////////////////////////////////////////////////////////////
+            ammo_mghe = new AmmoType();
+            Util.ShallowCopy(ammo_mghe, SharedAssets.ammo_3ubr6);
+            ammo_mghe.Name = "20mm HEI-T";
+            ammo_mghe.ShortName = AmmoType.AmmoShortName.Coax;
+            ammo_mghe.Category = AmmoType.AmmoCategory.Explosive;
+            ammo_mghe.UseTracer = true;
+            ammo_mghe.Mass = 0.52f;
+            ammo_mghe.Caliber = 20f;
+            ammo_mghe.Coeff = 0.08f;
+            ammo_mghe.TntEquivalentKg = 0.34f;
+            ammo_mghe.ImpactFuseTime = 0;
+            ammo_mghe.RhaToFuse = 0;
+            ammo_mghe.MuzzleVelocity = 1955f;
+            ammo_mghe.DetonateSpallCount = 15;
+            ammo_mghe.MicroFragScaling = 1.8f;
+            ammo_mghe.RhaPenetration = 23f;
+            ammo_mghe.SpallMultiplier = 2f;
+            ammo_mghe.MinSpallRha = 6;
+            ammo_mghe.MaxSpallRha = 12;
+            ammo_mghe.CertainRicochetAngle = 23.5f;
+            ammo_mghe.TerrainImpactEffect = Resources.FindObjectsOfTypeAll<GameObject>().Where(o => o.name == "HE Terrain Impact").First();
+            ammo_mghe.DetonateEffect = Resources.FindObjectsOfTypeAll<GameObject>().Where(o => o.name == "HEAT Impact").First();
+            ammo_mghe.VisualType = SharedAssets.ammo_3bm22.VisualType;
+            ammo_mghe.ImpactAudio = GHPC.Audio.ImpactAudioType.AutocannonExplosive;
+            ammo_mghe.ImpactEffectDescriptor = new ParticleEffectsManager.ImpactEffectDescriptor()
+            {
+                HasImpactEffect = true,
+                EffectSize = ParticleEffectsManager.EffectSize.Autocannon,
+                ImpactCategory = ParticleEffectsManager.Category.HighExplosive,
+                Flags = ParticleEffectsManager.ImpactModifierFlags.Small,
+                MinFilterStrictness = ParticleEffectsManager.FilterStrictness.Medium,
+                RicochetType = ParticleEffectsManager.RicochetType.SmallTracer
+            };
+            ammo_mghe.ImpactDecalDescriptor = new ImpactDecalsManager.ImpactDecalDescriptor()
+            {
+                HasImpactDecal = true,
+                DecalCategory = ImpactDecalsManager.DecalCategory.Explosion,
+                DecalType = ImpactDecalsManager.DecalType.Dent,
+                DecalImpactAngle = ImpactDecalsManager.DecalImpactAngle.High,
+                Flags = ImpactDecalsManager.DecalModifierFlags.Small,
+                MinFilterStrictness = ImpactDecalsManager.DecalFilterStrictness.Low,
+            };
+            Util.Coalesce(ref ammo_codex_mghe);
+            ammo_codex_mghe.AmmoType = ammo_mghe;
+            ammo_codex_mghe.name = "ammo_mghe";
 
+            clip_mghe = new AmmoType.AmmoClip();
+            clip_mghe.Capacity = 400;
+            clip_mghe.Name = "20mm APFSDS/HE Mixed Belt";
+            clip_mghe.MinimalPattern = new AmmoCodexScriptable[1];
+            clip_mghe.MinimalPattern[0] = ammo_codex_mghe;
+
+            Util.Coalesce(ref clip_codex_mghe);
+            clip_codex_mghe.name = "clip_mghe";
+            clip_codex_mghe.ClipType = clip_mghe;
+
+            ammo_mghe_vis = GameObject.Instantiate(SharedAssets.ammo_3bm32.VisualModel);
+            ammo_mghe_vis.name = "mghe visual";
+            ammo_mghe.VisualModel = ammo_mghe_vis;
+            ammo_mghe.ShotVisual = SharedAssets.ammo_3bm32.ShotVisual;
+            ammo_mghe.VisualModel.GetComponent<AmmoStoredVisual>().AmmoType = ammo_mghe;
+            ammo_mghe.VisualModel.GetComponent<AmmoStoredVisual>().AmmoScriptable = ammo_codex_mghe;
             /////////////////////////////////////////////////////////////////////////////////////////////
             ammo_mg = new AmmoType();
             Util.ShallowCopy(ammo_mg, SharedAssets.ammo_3ubr6);
             ammo_mg.Name = "20mm APFSDS-T";
             ammo_mg.ShortName = AmmoType.AmmoShortName.Coax;
             ammo_mg.UseTracer = true;
-            ammo_mg.Mass = 0.25f;
+            ammo_mg.Mass = 0.35f;
             ammo_mg.Caliber = 20f;
-            ammo_mg.Coeff = 0.0f;
-            ammo_mg.MinSpallRha = 10f;
-            ammo_mg.MaxSpallRha = 100f;
-            ammo_mg.MuzzleVelocity = 3200f;
+            ammo_mg.Coeff = 0.08f;
+            ammo_mg.MuzzleVelocity = 2000f;
             ammo_mg.RhaPenetration = 89f;
             ammo_mg.SpallMultiplier = 2f;
             ammo_mg.MinSpallRha = 6;
             ammo_mg.MaxSpallRha = 24;
-            ammo_mg.CertainRicochetAngle = 15.3f;
+            ammo_mg.CertainRicochetAngle = 18.3f;
             ammo_mg.VisualType = SharedAssets.ammo_3bm22.VisualType;
             ammo_mg.ImpactAudio = GHPC.Audio.ImpactAudioType.AutocannonKinetic;
             ammo_mg.ImpactEffectDescriptor = new ParticleEffectsManager.ImpactEffectDescriptor()
@@ -312,14 +457,27 @@ namespace BVVDT34
                 MinFilterStrictness = ParticleEffectsManager.FilterStrictness.Medium,
                 RicochetType = ParticleEffectsManager.RicochetType.SmallTracer
             };
+            ammo_mg.ImpactDecalDescriptor = new ImpactDecalsManager.ImpactDecalDescriptor()
+            {
+                HasImpactDecal = true,
+                DecalCategory = ImpactDecalsManager.DecalCategory.APFSDS,
+                DecalType = ImpactDecalsManager.DecalType.Penetration,
+                DecalImpactAngle = ImpactDecalsManager.DecalImpactAngle.High,
+                Flags = ImpactDecalsManager.DecalModifierFlags.Small,
+                MinFilterStrictness = ImpactDecalsManager.DecalFilterStrictness.Low,
+            };
             Util.Coalesce(ref ammo_codex_mg);
             ammo_codex_mg.AmmoType = ammo_mg;
             ammo_codex_mg.name = "ammo_mg";
 
             clip_mg = new AmmoType.AmmoClip();
-            clip_mg.Capacity = 400;
-            clip_mg.Name = "20mm APFSDS-T";
-            clip_mg.MinimalPattern = new AmmoCodexScriptable[1];
+            clip_mg.Capacity = 650;
+            clip_mg.Name = "20mm APFSDS-T/HEI-T";
+            clip_mg.MinimalPattern = new AmmoCodexScriptable[] {
+                ammo_codex_mg,
+                ammo_codex_mg,
+                ammo_codex_mghe,
+            };
             clip_mg.MinimalPattern[0] = ammo_codex_mg;
 
             Util.Coalesce(ref clip_codex_mg);

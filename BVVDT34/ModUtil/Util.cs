@@ -29,6 +29,14 @@ namespace ModUtil
             "LOADER_INITIAL",
             "t64_menu"
         };
+        public static AmmoType.ArmorOptimization CreateArmourOptimization(ArmorCodexScriptable codex, float ratio)
+        {
+            return new AmmoType.ArmorOptimization()
+            {
+                Armor = codex,
+                RhaRatio = ratio
+            };
+        }
 
         public static void CacheAmmo(AmmoType ammo)
         {
