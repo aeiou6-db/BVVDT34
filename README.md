@@ -9,16 +9,16 @@ Replaces the standard 85mm gun with a fictional smoothbore, replaces the MG with
 85mm Smoothbore Ammo
 
 - BR999PM APHEFSDS-T
-  - Penetrates the target and explodes with 5kg of TNT, intense spalling. Extreme Penetration
+  - Penetrates the target and explodes with nearly 2kg of TNT, intense spalling. Extreme Penetration
 
 - UBP-988M SAPHEAT-FS
-   - Explodes with 12kg of TNT, and generating a HEAT jet capable of penetrating just about anything, including the M1IP turret cheeks.
+   - Explodes with 4kg of TNT, and generating a HEAT jet capable of penetrating just about anything, including the M1IP turret cheeks.
 
 - 3BV85 MicroNuke
    - its a nuke
 
 - 9M94ML Velikan
-    - Gun launched ATGM with the ability to top attack depending on range
+    - Gun launched direct fire ATGM, high velocity and pen, with 10.5kg TNT
 
 Stalinium Armor 
  - Makes the armor really powerful, be mindful of gap in the mantlet with any APFSDS, and side armor when dealing with very powerful modded ammo.
@@ -34,14 +34,15 @@ Super Engine
 
 - 80kmh forward and reverse speed, boosted horsepower to boot
 
+Stabilizer
+
+- Stabilizes the gun
+
+- Speeds up turret traverse
 
 FCS Upgrade
 
-- Stabilizer
-
 - LRF
-
-- Very fast turret traverse
 
 - High zoom optics
 
