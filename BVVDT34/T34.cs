@@ -70,11 +70,11 @@ namespace BVVDT34
 
 
         }
+
         private static void HandleConversion(Vehicle vic)
         {
             if (vic == null) return;
             GameObject vic_go = vic.gameObject;
-
             if (vic._friendlyName != "T-34-85M") return;
             MelonLogger.Msg("T-34-85 FOUND!");
             vic._friendlyName = "Stalin's Own T-34-85";
@@ -108,6 +108,11 @@ namespace BVVDT34
                 vic._crewVoiceHandler = handler;
                 crew_voice.SetActive(true);
                 vic.AimablePlatforms[1].transform.parent.Find("T34_markings").Find("RONDELS001").gameObject.SetActive(false);
+                if (cfg_smoothbore)
+                {
+                    handler._assignedAmmoPrefs = AmmoPrefT34.T34AmmoPref;
+                    handler._ammoPrefs = AmmoPrefT34.T34AmmoPref;
+                }
                 MelonLogger.Msg("Success!");
             }
             if (cfg_smoothbore)
@@ -175,9 +180,57 @@ namespace BVVDT34
                 ai.firingDistance = -1;
                 ai.approachDistance = 999999;
                 ai.PointBlankRange = 2000;
-                vic._weaponsManager.AmmoPreferences = Resources.FindObjectsOfTypeAll<AmmoPreferencesUs84Scriptable>().Where(o => o.name == "AmmoPrefs USSR 84").First();
-                vic.transform.Find("DE Tank Voice").GetComponent<CrewVoiceHandler>()._assignedAmmoPrefs = Resources.FindObjectsOfTypeAll<AmmoPreferencesUs84Scriptable>().Where(o => o.name == "AmmoPrefs USSR 84").First();
-                vic.transform.Find("DE Tank Voice").GetComponent<CrewVoiceHandler>()._ammoPrefs = Resources.FindObjectsOfTypeAll<AmmoPreferencesUs84Scriptable>().Where(o => o.name == "AmmoPrefs USSR 84").First();
+                vic._weaponsManager.Preferences = new WeaponSystemPreference[12];
+                for (int i = 0; i < vic._weaponsManager.Preferences.Length; i++)
+                {
+                    vic._weaponsManager.Preferences[i] = new WeaponSystemPreference();
+                }
+                /// tank ///
+                vic._weaponsManager.Preferences[0].RangeBounds = new Vector2(650, 10000);
+                vic._weaponsManager.Preferences[1].RangeBounds = new Vector2(0, 1300);
+                vic._weaponsManager.Preferences[1].Role = WeaponSystemRole.Coaxial;
+                vic._weaponsManager.Preferences[0].Role = WeaponSystemRole.MainGun;
+                vic._weaponsManager.Preferences[0].TargetType = TargetShortNameUs.Tank;
+                vic._weaponsManager.Preferences[1].TargetType = TargetShortNameUs.Tank;
+                // pc //
+                vic._weaponsManager.Preferences[2].RangeBounds = new Vector2(0, 1000);
+                vic._weaponsManager.Preferences[3].RangeBounds = new Vector2(1000, 10000);
+                vic._weaponsManager.Preferences[2].Role = WeaponSystemRole.Coaxial;
+                vic._weaponsManager.Preferences[3].Role = WeaponSystemRole.MainGun;
+                vic._weaponsManager.Preferences[2].TargetType = TargetShortNameUs.Pc;
+                vic._weaponsManager.Preferences[3].TargetType = TargetShortNameUs.Pc;
+                // inf //
+                vic._weaponsManager.Preferences[4].RangeBounds = new Vector2(0, 1300);
+                vic._weaponsManager.Preferences[5].RangeBounds = new Vector2(1300, 10000);
+                vic._weaponsManager.Preferences[4].Role = WeaponSystemRole.Coaxial;
+                vic._weaponsManager.Preferences[5].Role = WeaponSystemRole.MainGun;
+                vic._weaponsManager.Preferences[4].TargetType = TargetShortNameUs.Troops;
+                vic._weaponsManager.Preferences[5].TargetType = TargetShortNameUs.Troops;
+                // heli //
+                vic._weaponsManager.Preferences[6].RangeBounds = new Vector2(0, 2000);
+                vic._weaponsManager.Preferences[7].RangeBounds = new Vector2(2000, 10000);
+                vic._weaponsManager.Preferences[6].Role = WeaponSystemRole.Coaxial;
+                vic._weaponsManager.Preferences[7].Role = WeaponSystemRole.MainGun;
+                vic._weaponsManager.Preferences[6].TargetType = TargetShortNameUs.Chopper;
+                vic._weaponsManager.Preferences[7].TargetType = TargetShortNameUs.Chopper;
+                // truck //
+                vic._weaponsManager.Preferences[8].RangeBounds = new Vector2(0, 1600);
+                vic._weaponsManager.Preferences[9].RangeBounds = new Vector2(1600, 10000);
+                vic._weaponsManager.Preferences[8].Role = WeaponSystemRole.Coaxial;
+                vic._weaponsManager.Preferences[9].Role = WeaponSystemRole.MainGun;
+                vic._weaponsManager.Preferences[8].TargetType = TargetShortNameUs.Truck;
+                vic._weaponsManager.Preferences[9].TargetType = TargetShortNameUs.Truck;
+                // antitank //
+                vic._weaponsManager.Preferences[10].RangeBounds = new Vector2(0, 1300);
+                vic._weaponsManager.Preferences[11].RangeBounds = new Vector2(1300, 10000);
+                vic._weaponsManager.Preferences[10].Role = WeaponSystemRole.Coaxial;
+                vic._weaponsManager.Preferences[11].Role = WeaponSystemRole.MainGun;
+                vic._weaponsManager.Preferences[10].TargetType = TargetShortNameUs.Antitank;
+                vic._weaponsManager.Preferences[11].TargetType = TargetShortNameUs.Antitank;
+                //
+                vic._weaponsManager.AmmoPreferences = AmmoPrefT34.T34AmmoPref;
+                vic.transform.Find("DE Tank Voice").GetComponent<CrewVoiceHandler>()._assignedAmmoPrefs = AmmoPrefT34.T34AmmoPref;
+                vic.transform.Find("DE Tank Voice").GetComponent<CrewVoiceHandler>()._ammoPrefs = AmmoPrefT34.T34AmmoPref;
 
             }
             if (cfg_superengine)
@@ -295,7 +348,7 @@ namespace BVVDT34
                 stab_mode.SetValue(aimables[0], StabilizationMode.Vector);
                 aimables[0]._useWorldSpace = false;
                 aimables[1]._useWorldSpace = false;
-                ai.CombatSpeedLimit = 9.5f;
+                ai.CombatSpeedLimit = 80f;
                 ai._gunnerAI._stabsOn = true;
                 ai._gunnerAI._sweepSpeed = 45;
                 ai._gunnerAI._sweepAngle = 165;

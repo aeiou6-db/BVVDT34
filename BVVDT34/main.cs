@@ -2,6 +2,7 @@
 using GHPC;
 using GHPC.Audio;
 using GHPC.Camera;
+using GHPC.Mission;
 using GHPC.Player;
 using GHPC.State;
 using GHPC.Utility;
@@ -15,8 +16,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
-[assembly: MelonInfo(typeof(BVVDT34Mod), "BVVD T34", "1.2", "Aeiou6")]
+[assembly: MelonInfo(typeof(BVVDT34Mod), "BVVD T34", "1.3", "Aeiou6")]
 [assembly: MelonGame("Radian Simulations LLC", "GHPC")]
 
 namespace BVVDT34
@@ -49,6 +51,7 @@ namespace BVVDT34
             module_manager.Add("ammo_85", new ammo_85());
             module_manager.Add("Stalinium", new Stalinium());
             module_manager.Add("T34", new T34());
+            module_manager.Add("AmmoPrefT34", new AmmoPrefT34());
         }
 
         public override void OnSceneWasLoaded(int buildIndex, string sceneName)
@@ -70,6 +73,7 @@ namespace BVVDT34
                 StateController.RunOrDefer(GameState.PlayerReady, new GameStateEventHandler(AssetUtil.ReleaseTempVanillaAssetsDeferred), GameStatePriority.Medium);
                 StateController.RunOrDefer(GameState.PlayerReady, new GameStateEventHandler(OnPlayerReady), GameStatePriority.Medium);
                 T34.Init();
+
                 valid_scene_count = 0;
             }
         }

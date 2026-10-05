@@ -107,6 +107,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AmmoPref.cs" />
     <Compile Include="ammo_85.cs" />
     <Compile Include="ModUtil\AssetUtil.cs" />
     <Compile Include="SharedAssets.cs" />

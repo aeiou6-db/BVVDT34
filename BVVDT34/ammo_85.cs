@@ -211,7 +211,7 @@ namespace BVVDT34
             ammo_heat.RhaPenetration = 5500f;
             ammo_heat.ImpactAudio = GHPC.Audio.ImpactAudioType.ArtilleryGun;
             ammo_heat.DetonateEffect = SharedAssets.ammo_3OF26.DetonateEffect;
-            ammo_heat.TerrainImpactEffect = SharedAssets.ammo_3OF26.TerrainImpactEffect;
+            ammo_heat.TerrainImpactEffect = Resources.FindObjectsOfTypeAll<GameObject>().Where(o => o.name == "Artillery 155mm Terrain").First();
             ammo_heat.Mass = 47.5f;
             ammo_heat.MuzzleVelocity = 1850f;
             ammo_heat.ArmingDistance = 0f;
@@ -259,25 +259,21 @@ namespace BVVDT34
             ammo_mininuke.ShortName = AmmoType.AmmoShortName.He;
             ammo_mininuke.Guidance = AmmoType.GuidanceType.Unguided;
             ammo_mininuke.Caliber = 85;
-            ammo_mininuke.TntEquivalentKg = 39.5f;
-            ammo_mininuke.CachedIndex = -1;
-            ammo_mininuke.RhaPenetration = 12f;
-            ammo_mininuke.ArmingDistance = 40;
-            ammo_mininuke.ImpactFuseTime = 0f;
-            ammo_mininuke.RhaToFuse = 12f;
-            ammo_mininuke.MicroFragScaling = 3f;
+            ammo_mininuke.TntEquivalentKg = 86f;
+            ammo_mininuke.RhaPenetration = 60f;
+            ammo_mininuke.ImpactFuseTime = 0.0001f;
+            ammo_mininuke.RhaToFuse = 5f;
             ammo_mininuke.DetonateEffect = SharedAssets.ammo_3OF26.DetonateEffect;
-            ammo_mininuke.TerrainImpactEffect = SharedAssets.ammo_3OF26.TerrainImpactEffect;
-            ammo_mininuke.VisualModel = SharedAssets.ammo_3bk18m.VisualModel;
-            ammo_mininuke.Coeff = 1.5f;
-            ammo_mininuke.Mass = 133f;
+            ammo_mininuke.TerrainImpactEffect = Resources.FindObjectsOfTypeAll<GameObject>().Where(o => o.name == "250kg Bomb Dirt").First();
+            ammo_mininuke.AlwaysProduceBlast = true;
+            ammo_mininuke.SphericalSpall = true;
+            ammo_mininuke.Coeff = 2.5f;
             ammo_mininuke.MuzzleVelocity = 550f;
-            ammo_mininuke.SpallMultiplier = 1f;
-            ammo_mininuke.MaxSpallRha = 30f;
-            ammo_mininuke.MinSpallRha = 10f;
-            ammo_mininuke.DetonateSpallCount = 135;
-            ammo_mininuke.NoisePowerX = 24;
-            ammo_mininuke.NoisePowerY = 26;
+            ammo_mininuke.Mass = 350f;
+            ammo_mininuke.SpallMultiplier = 5f;
+            ammo_mininuke.MaxSpallRha = 200f;
+            ammo_mininuke.MinSpallRha = 30f;
+            ammo_mininuke.DetonateSpallCount = 235;
             ammo_mininuke.ImpactEffectDescriptor = new ParticleEffectsManager.ImpactEffectDescriptor()
             {
                 HasImpactEffect = true,
@@ -302,28 +298,32 @@ namespace BVVDT34
             clip_codex_mininuke.name = "clip_mininuke";
             clip_codex_mininuke.ClipType = clip_mininuke;
 
-            ammo_mininuke_vis = GameObject.Instantiate(SharedAssets.ammo_3bk18m.VisualModel);
+            ammo_mininuke_vis = GameObject.Instantiate(SharedAssets.ammo_3OF26.VisualModel);
             ammo_mininuke_vis.name = "mininuke visual";
             ammo_mininuke.VisualModel = ammo_mininuke_vis;
             ammo_mininuke.VisualModel.GetComponent<AmmoStoredVisual>().AmmoType = ammo_mininuke;
             ammo_mininuke.VisualModel.GetComponent<AmmoStoredVisual>().AmmoScriptable = ammo_codex_mininuke;
+            ammo_mininuke.ShotVisual = Resources.FindObjectsOfTypeAll<GameObject>().Where(o => o.name == "FAB250_inflight").First();
             /////////////////////////////////////////////////////////////////////////////////////////////
             ammo_missile = new AmmoType();
             Util.ShallowCopy(ammo_missile, SharedAssets.ammo_kobra);
-            ammo_missile.Name = "9M94ML Velikan";
+            ammo_missile.Name = "Mig-21 Laser Guided Drone";
             ammo_missile.Caliber = 85;
-            ammo_missile.SpiralAngularRate = 10800f;
-            ammo_missile.SpiralPower = 150f;
-            ammo_missile.MuzzleVelocity = 750f;
-            ammo_missile.RhaPenetration = 20000f;
-            ammo_missile.TntEquivalentKg = 10.5f;
-            ammo_missile.Mass = 43.5f;
+            ammo_missile.SpiralAngularRate = 0f;
+            ammo_missile.SpiralPower = 0f;
+            ammo_missile.MuzzleVelocity = 550f;
+            ammo_missile.RhaPenetration = 200000f;
+            ammo_missile.TntEquivalentKg = 50.5f;
+            ammo_missile.Mass = 9025f;
             ammo_missile.Guidance = AmmoType.GuidanceType.Laser;
             ammo_missile.Flight = AmmoType.FlightPattern.Direct;
-            ammo_missile.Category = AmmoType.AmmoCategory.ShapedCharge;
+            ammo_missile.Category = AmmoType.AmmoCategory.Explosive;
             ammo_missile.Tandem = true;
             ammo_missile.IgnoreSlat = true;
-            ammo_missile.TurnSpeed = 12f;
+            ammo_missile.DetonateEffect = SharedAssets.ammo_3OF26.DetonateEffect;
+            ammo_missile.TerrainImpactEffect = Resources.FindObjectsOfTypeAll<GameObject>().Where(o => o.name == "250kg Bomb Dirt").First();
+            ammo_missile.SphericalSpall = true;
+            ammo_missile.TurnSpeed = 12.5f;
             ammo_missile.GuidanceLockoutTime = 0f;
             ammo_missile.Coeff = 0.5f;
             ammo_missile.AimPointMarch = -2f;
@@ -332,12 +332,12 @@ namespace BVVDT34
             ammo_missile.NoisePowerY = 0f;
             ammo_missile.NoiseTimeScale = 1f;
             ammo_missile.SpallMultiplier = 10;
-            ammo_missile.MinSpallRha = 20f;
-            ammo_missile.MaxSpallRha = 100f;
+            ammo_missile.MinSpallRha = 25f;
+            ammo_missile.MaxSpallRha = 120f;
             ammo_missile.DetonateSpallCount = 50;
             ammo_missile.RhaToFuse = 12f;
             ammo_missile.ImpactFuseTime = 0.05f;
-            ammo_missile.TerrainImpactEffect = SharedAssets.ammo_3OF26.TerrainImpactEffect;
+            ammo_missile.TerrainImpactEffect = SharedAssets.ammo_3OF26.DetonateEffect;
             ammo_missile.DetonateEffect = SharedAssets.ammo_3OF26.DetonateEffect;
             ammo_missile.ImpactEffectDescriptor = new ParticleEffectsManager.ImpactEffectDescriptor()
             {
@@ -354,7 +354,7 @@ namespace BVVDT34
 
             clip_missile = new AmmoType.AmmoClip();
             clip_missile.Capacity = 1;
-            clip_missile.Name = "9M94ML Velikan";
+            clip_missile.Name = "Mig-21 Laser Guided Drone";
             clip_missile.MinimalPattern = new AmmoCodexScriptable[1];
             clip_missile.MinimalPattern[0] = ammo_codex_missile;
 
@@ -367,8 +367,8 @@ namespace BVVDT34
             ammo_missile.VisualModel = ammo_missile_vis;
             ammo_missile.VisualModel.GetComponent<AmmoStoredVisual>().AmmoType = ammo_missile;
             ammo_missile.VisualModel.GetComponent<AmmoStoredVisual>().AmmoScriptable = ammo_codex_missile;
-
-                        /////////////////////////////////////////////////////////////////////////////////////////////
+            ammo_missile.ShotVisual = Resources.FindObjectsOfTypeAll<GameObject>().Where(o => o.name == "MiG21_rig").First();
+            /////////////////////////////////////////////////////////////////////////////////////////////
             ammo_mghe = new AmmoType();
             Util.ShallowCopy(ammo_mghe, SharedAssets.ammo_3ubr6);
             ammo_mghe.Name = "20mm HEI-T";
