@@ -18,7 +18,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-[assembly: MelonInfo(typeof(BVVDT34Mod), "BVVD T34", "1.3", "Aeiou6")]
+[assembly: MelonInfo(typeof(BVVDT34Mod), "BVVD T34", "1.3.1", "Aeiou6")]
 [assembly: MelonGame("Radian Simulations LLC", "GHPC")]
 
 namespace BVVDT34

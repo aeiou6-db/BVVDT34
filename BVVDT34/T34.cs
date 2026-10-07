@@ -8,6 +8,7 @@ using GHPC.Effects.Voices;
 using GHPC.Equipment;
 using GHPC.Equipment.Optics;
 using GHPC.Mission;
+using GHPC.Multiplayer.Entity;
 using GHPC.State;
 using GHPC.Thermals;
 using GHPC.UI.Tips;
@@ -180,6 +181,7 @@ namespace BVVDT34
                 ai.firingDistance = -1;
                 ai.approachDistance = 999999;
                 ai.PointBlankRange = 2000;
+                MelonLogger.Msg("Setting New Preferences!");
                 vic._weaponsManager.Preferences = new WeaponSystemPreference[12];
                 for (int i = 0; i < vic._weaponsManager.Preferences.Length; i++)
                 {
@@ -228,6 +230,7 @@ namespace BVVDT34
                 vic._weaponsManager.Preferences[10].TargetType = TargetShortNameUs.Antitank;
                 vic._weaponsManager.Preferences[11].TargetType = TargetShortNameUs.Antitank;
                 //
+                MelonLogger.Msg("Completed new Preferences!");
                 vic._weaponsManager.AmmoPreferences = AmmoPrefT34.T34AmmoPref;
                 vic.transform.Find("DE Tank Voice").GetComponent<CrewVoiceHandler>()._assignedAmmoPrefs = AmmoPrefT34.T34AmmoPref;
                 vic.transform.Find("DE Tank Voice").GetComponent<CrewVoiceHandler>()._ammoPrefs = AmmoPrefT34.T34AmmoPref;
@@ -238,7 +241,9 @@ namespace BVVDT34
                 MelonLogger.Msg("Starting Engine Conversion!");
                 VehicleController this_vic_controller = vic_go.GetComponent<VehicleController>();
                 NwhChassis chassis = vic_go.GetComponent<NwhChassis>();
-
+                Engine engine = this_vic_controller.engine;
+                Tracks tracks = this_vic_controller.tracks;
+                Transmission transmission = this_vic_controller.transmission;
                 Util.ShallowCopy(this_vic_controller.engine, SharedAssets.abrams_vic_controller.engine);
                 Util.ShallowCopy(this_vic_controller.transmission, SharedAssets.abrams_vic_controller.transmission);
 
@@ -248,13 +253,36 @@ namespace BVVDT34
                 this_vic_controller.engine.Start();
                 this_vic_controller.transmission.Initialize(this_vic_controller);
 
+                tracks.maxLeftRpm = 2800f;
+                tracks.maxRightRpm = 2800f;
+                tracks.enlargeCoef = 0.8f;
+                tracks.wheelEnlargementCoefficient = 0.8f;
+                transmission.forwardGears = new List<float> {7.5f ,5.81f, 3.58f, 2.88f, 2.12f, 1.66f, 1f, 0.65f};
+                transmission.reverseGears = new List<float> {-0.65f ,-1f, -1.66f, -2.12f, -2.88f, -3.58f, -5.81f, -7.5f};
+                transmission.gears = new List<float> { -0.65f, -1f, -1.66f, -2.12f, -2.88f, -3.58f, -5.81f, -7.5f, 0f, 7.5f, 5.81f, 3.58f, 2.88f, 2.12f, 1.66f, 1f, 0.65f };
+                transmission.targetShiftUpRPM = 2700f;
+                transmission.targetShiftDownRPM = 1800;
+                transmission.gearMultiplier = 11.4f;
+                transmission.initialShiftDuration = 0.0015f;
+                transmission.shiftDuration = 0.05f;
+                transmission.transmissionType = Transmission.TransmissionType.AutomaticSequential;
+                transmission.reverseType = Transmission.ReverseType.Auto;
+                transmission.useThrottleLimiting = false;
+                transmission.reverseThrottleLimit = 1f;
+                transmission.differentialType = Transmission.DifferentialType.Open;
                 chassis._maxForwardSpeed = 35f;
                 chassis._maxReverseSpeed = 35f;
                 chassis._originalEnginePower = 5000f;
                 chassis.SteerAccelerationMultiplier = 4f;
                 chassis._originalShiftDuration = 0;
                 chassis._origTrackSpeedCoefficient = 0.2f;
-
+                engine.minRPM = 1600f;
+                engine.maxRPM = 2900f;
+                engine.maxPower = 5000f;
+                engine.powerCurve = new AnimationCurve(new Keyframe(0f, 0f), new Keyframe(0.1f, 0.62f), new Keyframe(0.55f, 0.78f), new Keyframe(0.75f, 1f), new Keyframe(1f, 0.98f));
+                ai.combatSpeedLimit = 40f;
+                ai.speedTolerance = 5f;
+                ai.firingSpeedLimit = -1f;
                 MelonLogger.Msg("Engine Conversion Success!");
             }
             if (cfg_superarmor)
@@ -369,7 +397,7 @@ namespace BVVDT34
                 main_gun.FCS.MaxLaserRange = 4000f;
                 main_gun.FCS._currentRange = 0f;
                 main_gun.FCS.RegisteredRangeLimits = new Vector2(0, 4000);
-                main_gun.FCS._autoDumpViaPalmSwitches = true;
+                main_gun.FCS._autoDumpViaPalmSwitches = false;
                 main_gun.FCS.WeaponAuthoritative = false;
                 main_gun.FCS.InertialCompensation = false;
                 main_gun.FCS.LaserAim = LaserAimMode.ImpactPoint;

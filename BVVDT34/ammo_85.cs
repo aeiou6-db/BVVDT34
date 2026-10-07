@@ -40,6 +40,12 @@ namespace BVVDT34
         public static AmmoType ammo_missile;
         public static GameObject ammo_missile_vis = null;
 
+        public static AmmoClipCodexScriptable clip_codex_legacy;
+        public static AmmoType.AmmoClip clip_legacy;
+        public static AmmoCodexScriptable ammo_codex_legacy;
+        public static AmmoType ammo_legacy;
+        public static GameObject ammo_kegacy_vis = null;
+
         public static AmmoClipCodexScriptable clip_codex_mg;
         public static AmmoType.AmmoClip clip_mg;
         public static AmmoCodexScriptable ammo_codex_mg;
@@ -195,6 +201,7 @@ namespace BVVDT34
             ammo_ap.VisualModel = ammo_ap_vis;
             ammo_ap.VisualModel.GetComponent<AmmoStoredVisual>().AmmoType = ammo_ap;
             ammo_ap.VisualModel.GetComponent<AmmoStoredVisual>().AmmoScriptable = ammo_codex_ap;
+            ammo_ap.ShotVisual.transform.localScale = new Vector3(1.6f, 1.6f, 3.5f);
 
             /*****************************************************************************************************/
 
@@ -213,6 +220,7 @@ namespace BVVDT34
             ammo_heat.DetonateEffect = SharedAssets.ammo_3OF26.DetonateEffect;
             ammo_heat.TerrainImpactEffect = Resources.FindObjectsOfTypeAll<GameObject>().Where(o => o.name == "Artillery 155mm Terrain").First();
             ammo_heat.Mass = 47.5f;
+            ammo_heat.ShotVisual.transform.localScale = new Vector3(2.5f, 2.5f, 3f);
             ammo_heat.MuzzleVelocity = 1850f;
             ammo_heat.ArmingDistance = 0f;
             ammo_heat.Tandem = true;
@@ -303,11 +311,11 @@ namespace BVVDT34
             ammo_mininuke.VisualModel = ammo_mininuke_vis;
             ammo_mininuke.VisualModel.GetComponent<AmmoStoredVisual>().AmmoType = ammo_mininuke;
             ammo_mininuke.VisualModel.GetComponent<AmmoStoredVisual>().AmmoScriptable = ammo_codex_mininuke;
-            ammo_mininuke.ShotVisual = Resources.FindObjectsOfTypeAll<GameObject>().Where(o => o.name == "FAB250_inflight").First();
+            ammo_mininuke.ShotVisual.transform.localScale = new Vector3(1.5f, 1.5f, 4f);
             /////////////////////////////////////////////////////////////////////////////////////////////
             ammo_missile = new AmmoType();
             Util.ShallowCopy(ammo_missile, SharedAssets.ammo_kobra);
-            ammo_missile.Name = "Mig-21 Laser Guided Drone";
+            ammo_missile.Name = "9M94ML Velikan";
             ammo_missile.Caliber = 85;
             ammo_missile.SpiralAngularRate = 0f;
             ammo_missile.SpiralPower = 0f;
@@ -354,7 +362,7 @@ namespace BVVDT34
 
             clip_missile = new AmmoType.AmmoClip();
             clip_missile.Capacity = 1;
-            clip_missile.Name = "Mig-21 Laser Guided Drone";
+            clip_missile.Name = "9M94ML Velikan";
             clip_missile.MinimalPattern = new AmmoCodexScriptable[1];
             clip_missile.MinimalPattern[0] = ammo_codex_missile;
 
@@ -367,7 +375,8 @@ namespace BVVDT34
             ammo_missile.VisualModel = ammo_missile_vis;
             ammo_missile.VisualModel.GetComponent<AmmoStoredVisual>().AmmoType = ammo_missile;
             ammo_missile.VisualModel.GetComponent<AmmoStoredVisual>().AmmoScriptable = ammo_codex_missile;
-            ammo_missile.ShotVisual = Resources.FindObjectsOfTypeAll<GameObject>().Where(o => o.name == "MiG21_rig").First();
+            ammo_missile.ShotVisual = Resources.FindObjectsOfTypeAll<GameObject>().Where(o => o.name == "MILAN 1 visual").First();
+            ammo_missile.ShotVisual.transform.localScale = new Vector3(2f, 2f, 2f);
             /////////////////////////////////////////////////////////////////////////////////////////////
             ammo_mghe = new AmmoType();
             Util.ShallowCopy(ammo_mghe, SharedAssets.ammo_3ubr6);
@@ -425,10 +434,11 @@ namespace BVVDT34
             clip_codex_mghe.name = "clip_mghe";
             clip_codex_mghe.ClipType = clip_mghe;
 
-            ammo_mghe_vis = GameObject.Instantiate(SharedAssets.ammo_3bm32.VisualModel);
+            ammo_mghe_vis = GameObject.Instantiate(SharedAssets.ammo_3bm22.VisualModel);
             ammo_mghe_vis.name = "mghe visual";
             ammo_mghe.VisualModel = ammo_mghe_vis;
-            ammo_mghe.ShotVisual = SharedAssets.ammo_3bm32.ShotVisual;
+            ammo_mghe.ShotVisual = SharedAssets.ammo_3bm22.ShotVisual;
+            ammo_mghe.ShotVisual.transform.localScale = new Vector3(0.45f, 0.45f, 0.55f);
             ammo_mghe.VisualModel.GetComponent<AmmoStoredVisual>().AmmoType = ammo_mghe;
             ammo_mghe.VisualModel.GetComponent<AmmoStoredVisual>().AmmoScriptable = ammo_codex_mghe;
             /////////////////////////////////////////////////////////////////////////////////////////////
@@ -484,10 +494,10 @@ namespace BVVDT34
             clip_codex_mg.name = "clip_mg";
             clip_codex_mg.ClipType = clip_mg;
 
-            ammo_mg_vis = GameObject.Instantiate(SharedAssets.ammo_3bm32.VisualModel);
+            ammo_mg_vis = GameObject.Instantiate(SharedAssets.ammo_3bm22.VisualModel);
             ammo_mg_vis.name = "mg visual";
             ammo_mg.VisualModel = ammo_mg_vis;
-            ammo_mg.ShotVisual = SharedAssets.ammo_3bm32.ShotVisual;    
+            ammo_mg.ShotVisual = SharedAssets.ammo_3bm22.ShotVisual;
             ammo_mg.VisualModel.GetComponent<AmmoStoredVisual>().AmmoType = ammo_mg;
             ammo_mg.VisualModel.GetComponent<AmmoStoredVisual>().AmmoScriptable = ammo_codex_mg;
             /*****************************************************************************************************/

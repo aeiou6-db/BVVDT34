@@ -14,16 +14,16 @@ namespace BVVDT34
     internal class SharedAssets : Module
     {
         internal static AmmoType ammo_3bm32;
-        internal static AmmoType ammo_fab250;
         internal static AmmoType ammo_3bm22;
         internal static AmmoType ammo_3bk18m;
         internal static AmmoType ammo_3OF26;
         internal static AmmoType ammo_kobra;
+
+        internal static AmmoType ammo_milan;
         internal static AmmoClipCodexScriptable clip_codex_3bm22;
         internal static AmmoClipCodexScriptable clip_codex_3bm32;
 
         internal static GameObject HE_Explosion;
-
         internal static AmmoClipCodexScriptable clip_codex_3OF26;
         internal static TMP_FontAsset tpd_etch_sdf;
         internal static VehicleController abrams_vic_controller;
@@ -31,6 +31,7 @@ namespace BVVDT34
         internal static GameObject flir_post_green;
         internal static GameObject crt_shock_go;
         internal static GameObject m2_bradley_canvas;
+
         internal static AmmoClipCodexScriptable clip_codex_3bk18m;
         internal static AmmoClipCodexScriptable clip_codex_3ubr6;
         internal static AmmoType ammo_3ubr6;
